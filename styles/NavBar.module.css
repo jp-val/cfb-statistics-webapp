@@ -1,0 +1,19 @@
+.navlink {
+	text-align: right;
+}
+  
+.rankings {
+	display: flex;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+div {
+	text-align: right;
+}
+  
+a {
+	color: inherit;
+	text-decoration: none;
+	padding: 2%;
+}
