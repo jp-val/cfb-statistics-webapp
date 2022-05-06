@@ -1,0 +1,20 @@
+.logo {
+  /* padding-left: 10%; */
+  text-align: center;
+}
+
+.navbar {
+  color: white;
+  background: #0070f3;
+  text-align: center;
+  padding: 25px;
+}
+
+.navbar a {
+  font-weight: bold;
+  margin: 2%;
+}
+
+.navbar a:hover {
+  color: yellow;
+}

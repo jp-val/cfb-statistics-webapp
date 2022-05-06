@@ -21,7 +21,7 @@ export default function DenseTable({name, ranking}) {
         </TableHead>
         <TableBody>
           {ranking.map((team) => (
-            <TableRow>
+            <TableRow key={team}>
               <TableCell>{x += 1}. {team}</TableCell>
             </TableRow>
           ))}

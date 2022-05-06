@@ -1,0 +1,7 @@
+client
+------
+npm install axios moment react-file-base
+
+server
+------
+npm install body-parser cors express mongoose nodemon
