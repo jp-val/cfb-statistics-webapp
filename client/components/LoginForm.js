@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import { useCookies } from 'react-cookie';
+import { API } from '../api/base.js';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -7,39 +9,20 @@ import styles from '../styles/Admin.module.css';
 
 const LoginForm = ({setLogin}) => {
 
-  const [cookie, setCookie, removeCookie] = useCookies(["user"]);
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [cookie, setCookie, removeCookie] = useCookies(['user']);
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
   const doLogin = async () => {
   
-    console.log('doing login');
+    const res = await API.post('/user/signin', { username, password });
     
-    const res = await fetch(`http://localhost:3000/api/signin`, {
-
-      method: "post",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
-    });
-
-    const retval = await res.json();
-    console.log('whats up bro', retval);
-    
-    if (retval.authToken) {
+    if (res.data.authToken) {
+      setCookie('authToken', res.data.authToken);
       setLogin(true);
-      setCookie("authToken", retval.authToken);
     }
 
-    // setUsername("");
-    // setPassword("");
-  
+    setPassword('');
   };
 
   return (

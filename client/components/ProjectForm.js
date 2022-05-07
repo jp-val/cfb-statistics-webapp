@@ -8,16 +8,16 @@ import styles from '../styles/Admin.module.css'
 
 const ProjectForm = ({setLogin}) => {
 
-  const [cookie, setCookie, removeCookie] = useCookies(["user"]);
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [content, setContent] = React.useState("");
+  const [cookie, setCookie, removeCookie] = useCookies(['user']);
+  const [title, setTitle] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [content, setContent] = React.useState('');
 
   function generateString(length) {
 
     const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const charactersLength = characters.length;
-    let result = "";
+    let result = '';
     for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
@@ -26,7 +26,7 @@ const ProjectForm = ({setLogin}) => {
   }
 
   const addProject = async () => {
-    console.log("adding project ...");
+    console.log('adding project ...');
   };
 
   const doLogout = async () => {
@@ -36,10 +36,8 @@ const ProjectForm = ({setLogin}) => {
 
   return (
     <div className={styles.form}>
-      <div>
-        <h1>New Project</h1>
-        <Button variant="contained" onClick={doLogout}>Sign Out</Button>
-      </div>
+      <h1>New Project</h1>
+      <Button variant="contained" onClick={doLogout}>Sign Out</Button>
       <TextField
         sx={{width: `30%`, marginBottom: 2}}
         required

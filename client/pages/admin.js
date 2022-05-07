@@ -1,36 +1,20 @@
 import * as React from 'react';
-
 import Head from 'next/head'
+
+import { useCookies } from 'react-cookie';
+import { API } from '../api/base.js';
+
 import LoginForm from '../components/LoginForm'
 import ProjectForm from '../components/ProjectForm'
 
-// const doAuth = async () => {
-
-//   const res = await fetch(`http://localhost:3000/api/auth`, {
-
-//     method: "post",
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-
-//     body: JSON.stringify({
-//       authToken: cookie.authToken,
-//     })
-//   });
-
-//   const retval = await res.json();
-
-//   if (cookie.authToken === "lol69") {
-//     initLog = true;
-//   }
-// }
-
 export default function Admin({auth}) {
 
+  const [cookie, setCookie, removeCookie] = useCookies(['user']);
   const [isLoggedIn, setLogin] = React.useState(auth);
 
-  console.log(isLoggedIn);
+  if (!isLoggedIn) {
+    removeCookie('authToken');
+  }
 
   return (
     <div>
@@ -47,14 +31,25 @@ export default function Admin({auth}) {
 }
 
 export const getServerSideProps = async ({req}) => {
+
+  try {
+    
+    if (!req.cookies.authToken) {
+      return { props: { 'auth': false } };
+    }
   
-  console.log(req.cookies.authToken);
+    const body = { 'authToken': req.cookies.authToken };
+    const res = await API.post('/user/validate-token', body);
+  
+    if (res.data.authenticated) {
+      return { props: { 'auth': true } };
+    } else {
+      return { props: { 'auth': false } };
+    }
 
-  var auth = false;
-
-  if (req.cookies.authToken) {
-   auth = true;
+  } catch (error) {
+    
+    console.log("Something went wrong during authentication api call:", error);
+    return { props: { 'auth': false } };
   }
-
-  return { props: { auth } }
 }
