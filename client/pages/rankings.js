@@ -1,6 +1,6 @@
 import Head from 'next/head'
+
 import DenseTable from '../components/Table'
-import styles from '../styles/Home.module.css'
 
 export default function Rankings({ranking}) {
   
@@ -14,7 +14,7 @@ export default function Rankings({ranking}) {
 
       <h1>cfb rankings</h1>
 
-      <div className={styles.rankings}>
+      <div>
         <DenseTable {...ranking} />
         <DenseTable {...ranking} />
         <DenseTable {...ranking} />
@@ -27,9 +27,14 @@ export default function Rankings({ranking}) {
 
 export const getStaticProps = async () => {
   
-  const res = await fetch(`http://localhost:3000/api/hello`)
-    const ranking = await res.json()
-    console.log(ranking)
+  // const res = await fetch(`http://localhost:3000/api/hello`)
+  // const ranking = await res.json()
+  // console.log(ranking)
+
+  const ranking = {
+    name: 'AP Poll',
+    ranking: ['Alabama', 'Ohio State', 'Clemson', 'Oklahoma', 'Georgia', 'Penn State', 'Wisconsin', 'Florida']
+  };
     
   return { props: { ranking } }
 }

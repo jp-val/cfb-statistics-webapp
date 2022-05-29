@@ -1,8 +1,17 @@
 import Head from 'next/head'
-import Navbar from '../components/Navbar'
+import NavBar from '../components/NavBar'
+import Card from '../components/Card'
+
+import styles from '../styles/RandPassGen.module.css'
 
 export default function Projects() {
   
+  const object = {
+    title: 'Some title goes here.',
+    link: 'https://www.github.com/jp-val',
+    description: 'And then some description would go here cuz where else would it go? lmao.'
+  }
+
   return (
     <div>
       <Head>
@@ -11,9 +20,17 @@ export default function Projects() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
+      <NavBar />
       
       <h1>projects</h1>
+
+      <div className={styles.grid}>
+        <Card object={object} />
+        {/* <Card />
+        <Card />
+        <Card /> */}
+      </div>
+
     </div>
   )
 }

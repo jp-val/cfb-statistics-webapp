@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Navbar from '../components/Navbar'
+import NavBar from '../components/NavBar'
 
 export default function About() {
   
@@ -11,7 +11,7 @@ export default function About() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <Navbar />
+      <NavBar />
 
       <h1>about</h1>
     </div>

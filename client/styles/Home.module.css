@@ -18,3 +18,7 @@
 .navbar a:hover {
   color: yellow;
 }
+
+.rankings {
+  flex-direction: row;
+}

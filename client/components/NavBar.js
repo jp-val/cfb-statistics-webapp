@@ -1,5 +1,6 @@
-import Link from 'next/link'
-import styles from '../styles/Home.module.css'
+import Link from 'next/link';
+
+import styles from '../styles/Home.module.css';
 
 const pages = [ 
 	{ name: 'Home', link: '/' },
@@ -8,7 +9,7 @@ const pages = [
   { name: 'About', link: '/about' },
 ];
 
-const Navbar = () => {
+const NavBar = () => {
 
 	return (
     <div>
@@ -17,11 +18,11 @@ const Navbar = () => {
       </div>
       <div className={styles.navbar}>
         {pages.map((page) => (
-          <Link href={page.link}><a>{page.name}</a></Link>
+          <Link key={page.name} href={page.link}><a>{page.name}</a></Link>
         ))}
       </div>
     </div>
 	)
 }
 
-export default Navbar
+export default NavBar

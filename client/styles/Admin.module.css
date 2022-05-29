@@ -8,3 +8,45 @@
 .welcome {
   margin-top: 15%;
 }
+
+.navbar {
+  margin: 25px;
+}
+
+.navbar a {
+  margin-left: 25px;
+}
+
+.navbar Button {
+  float: right;
+}
+
+.dashboardTitle {
+  text-align: center;
+}
+
+.box {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.title {
+  text-align: center;
+}
+
+.container1 {
+  float: left;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container2 {
+  background-color: aqua;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

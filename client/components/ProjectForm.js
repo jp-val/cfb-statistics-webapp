@@ -1,56 +1,45 @@
 import * as React from 'react';
-import { useCookies } from 'react-cookie';
 
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import {
+  Stack,
+  TextField,
+  Button 
+} from '@mui/material';
 
-import styles from '../styles/Admin.module.css'
+import styles from '../styles/Admin.module.css';
 
-const ProjectForm = ({setLogin}) => {
+const ProjectForm = () => {
 
-  const [cookie, setCookie, removeCookie] = useCookies(['user']);
   const [title, setTitle] = React.useState('');
+  const [link, setLink] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [content, setContent] = React.useState('');
 
-  function generateString(length) {
-
-    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const charactersLength = characters.length;
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-
-    return result;
-  }
-
-  const addProject = async () => {
+  const updateProject = async () => {
     console.log('adding project ...');
-  };
-
-  const doLogout = async () => {
-    setLogin(false);
-    removeCookie('authToken');
   };
 
   return (
     <div className={styles.form}>
-      <h1>New Project</h1>
-      <Button variant="contained" onClick={doLogout}>Sign Out</Button>
       <TextField
-        sx={{width: `30%`, marginBottom: 2}}
+        sx={{width: `30%`, maxWidth: 600, marginBottom: 2}}
         required
-        id="outlined-textarea"
+        id="outlined-textarea-title"
         label="Title"
         multiline
         value={title}
         onChange={(event) => {setTitle(event.target.value)}}
       />
       <TextField
-        sx={{width: `45%`, marginBottom: 2}}
-        required
-        id="outlined-multiline-static"
+        sx={{width: `30%`, maxWidth: 600, marginBottom: 2}}
+        id="outlined-textarea-link"
+        label="Link"
+        value={link}
+        onChange={(event) => {setLink(event.target.value)}}
+      />
+      <TextField
+        sx={{width: `45%`, maxWidth: 800, marginBottom: 2}}
+        id="outlined-multiline-static-description"
         label="Description"
         multiline
         rows={2}
@@ -58,16 +47,15 @@ const ProjectForm = ({setLogin}) => {
         onChange={(event) => {setDescription(event.target.value)}}
       />
       <TextField
-        sx={{width: `60%`, marginBottom: 2}}
-        required
-        id="outlined-multiline-static"
+        sx={{width: `60%`, maxWidth: 1000, marginBottom: 2}}
+        id="outlined-multiline-static-content"
         label="Content"
         multiline
-        rows={25}
+        rows={20}
         value={content}
         onChange={(event) => {setContent(event.target.value)}}
       />
-      <Button variant="contained" onClick={addProject}>Submit</Button>
+      <Button variant="contained" onClick={updateProject}>Save and Continue</Button>
     </div>
   )
 }
