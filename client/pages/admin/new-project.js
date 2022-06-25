@@ -2,19 +2,21 @@ import Head from 'next/head'
 
 import ProjectForm from '../../components/ProjectForm';
 
-// export const getServerSideProps = async ({req}) => {
+export const getServerSideProps = async ({ req }) => {
   
-//   if (!req.cookies.authToken) {
-//     return {
-//       redirect: {
-//         destination: '/admin'
-//       }
-//     }
-//   }
-// };
+  if (!req.cookies.authToken) {
+    return {
+      redirect: {
+        destination: '/admin'
+      }
+    }
+  }
+
+  return { props: { }};
+};
 
 export default function NewProjectForm() {
-  
+
   return (
     <div>
       <Head>

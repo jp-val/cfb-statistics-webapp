@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import DenseTable from '../components/Table'
+import DenseTable from '../../components/Table'
 
 export default function Rankings({ranking}) {
   

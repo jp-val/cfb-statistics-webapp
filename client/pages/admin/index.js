@@ -2,45 +2,59 @@ import * as React from 'react';
 import Head from 'next/head';
 
 import { useCookies } from 'react-cookie';
-import { API } from '../../api/base.js';
+import { API, getUserIp } from '../../api/base.js';
 
 import LoginForm from '../../components/LoginForm';
 import AdminNavBar from '../../components/AdminNavBar';
+import { 
+  Button,
+  Typography
+ } from '@mui/material';
 
-export const getServerSideProps = async ({req}) => {
+export const getServerSideProps = async ({ req }) => {
+ 
+  const badAuth = { props: { auth: false, serverSideIp: "0.1.2.3.4.5.6.7.8.9" } };
 
   try {
     
     // console.log(req.headers['user-agent']);
 
     if (!req.cookies.authToken) {
-      return { props: { 'auth': false } };
+      return badAuth;
     }
 
-    const body = { 'authToken': req.cookies.authToken };
+    const ip = await getUserIp();
+    const body = { ip, authToken: req.cookies.authToken };
     const res = await API.post('/user/validate-token', body);
   
     if (res.data.authenticated) {
-      return { props: { 'auth': true } };
+      return { props: { auth: true, serverSideIp: ip } };
     } else {
-      return { props: { 'auth': false } };
+      return badAuth;
     }
 
   } catch (error) {
     
     console.log("Something went wrong during authentication api call:", error);
-    return { props: { 'auth': false } };
+    return badAuth;
   }
 }
 
-export default function Admin({ auth }) {
+export default function Admin({ auth, serverSideIp }) {
 
   const [cookie, setCookie, removeCookie] = useCookies(['user']);
   const [isLoggedIn, setLogin] = React.useState(auth);
+  const [ip, setIp] = React.useState('press get ip button to get ip');
 
   if (!isLoggedIn) {
     removeCookie('authToken');
   }
+
+  const getAndSetIp = async () => {
+
+    const ip = await getUserIp();
+    setIp(ip);
+  };
 
   return (
     <div>
@@ -50,9 +64,13 @@ export default function Admin({ auth }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Typography>server side ip: {serverSideIp}</Typography>
       { isLoggedIn ? <AdminNavBar setLogin={setLogin} /> : null }
       { isLoggedIn ? <h1>Admin Dashboard</h1> : <LoginForm setLogin={setLogin}/> }
-    
+      
+      <Typography sx={{marginBottom: 1}}>{ip}</Typography>
+      <Button variant="contained" onClick={getAndSetIp}>Get IP</Button>
+
     </div>
   )
 }

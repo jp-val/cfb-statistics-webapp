@@ -1,10 +1,58 @@
 import Head from 'next/head'
+import Link from 'next/link'
+
+import * as React from 'react';
+
+import { useCookies } from 'react-cookie';
+import { API, getUserIp } from '../../api/base'
+
+import {
+  TextField,
+  Button, 
+  Typography
+} from '@mui/material';
 
 import AdminNavBar from '../../components/AdminNavBar'
-import Card from '../../components/Card';
+import styles from '../../styles/Admin.module.css'
 
-export default function Projects() {
+export const getServerSideProps = async ({ req }) => {
+
+  if (!req.cookies.authToken) {
+    return { redirect: { destination: '/admin' }};
+  }
+
+  const body = { authToken: req.cookies.authToken };
+  const res = await API.post('/user/validate-token', body);
   
+  if (res.data.authenticated) {
+    return { props: { auth: true } };
+  } else {
+    return badAuth;
+  }
+
+  const res = await API.get('/user/get-projects');
+  return { props: { projects: res.data.projects }};
+}
+
+export default function Projects({ projects }) {
+  
+  const [cookie, setCookie, removeCookie] = useCookies(['user']);
+  
+  const loadProject = async (event) => {
+    
+    const ip = await getUserIp();
+    const body = { ip, authToken: cookie.authToken, pid: event.target.id };
+    const res = await API.post('/user/get-project', body);
+
+    if (res.data.pid) {
+      setCookie('pid', res.data.pid, { path: '/admin' });
+      setCookie('title', res.data.title, { path: '/admin' });
+      setCookie('link', res.data.link, { path: '/admin' });
+      setCookie('description', res.data.description, { path: '/admin' });
+      setCookie('content', res.data.content, { path: '/admin' });
+    }
+  }
+
   return (
     <div>
       <Head>
@@ -14,8 +62,39 @@ export default function Projects() {
       </Head>
 
       <AdminNavBar />
-      <h1>Projects</h1>
-      
+      <div className={styles.main}>
+        <h1>Projects</h1>
+
+        <div className={styles.grid}>
+          <Link href='/admin/new-project'>
+            <a className={styles.card}>
+              <h1>Add New Project &rarr;</h1>
+              <p>Make it a good one, bro.</p>
+            </a>
+          </Link>
+
+          {projects.map((project) => (
+            <>
+            <Link key={project.title} href='/admin/new-project'>
+              <a className={styles.card}>
+                <h1>{project.title} &rarr;</h1>
+                <p>{project.description}</p>
+              </a>
+            </Link>
+            <Link key={project.title} href='/admin/new-project'>
+              <Button id={project.pid} variant='contained' onClick={loadProject}>Edit</Button>
+            </Link>
+            </>
+          ))}
+
+          <Link href='/admin/new-project'>
+            <a className={styles.card}>
+              <h1>Add New Project &rarr;</h1>
+              <p>Make it a good one, bro.</p>
+            </a>
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }

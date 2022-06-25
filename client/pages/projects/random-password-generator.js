@@ -11,7 +11,7 @@ import {
   Typography
 } from '@mui/material'
 
-import styles from '../styles/RandPassGen.module.css'
+import styles from '../../styles/RandPassGen.module.css'
 
 export default function RandomPasswordGenerator() {
   

@@ -19,7 +19,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import styles from '../styles/Admin.module.css';
 
-const LoginForm = ({setLogin}) => {
+const LoginForm = ({ setLogin }) => {
 
   const [cookie, setCookie, removeCookie] = useCookies(['user']);
   const [username, setUsername] = React.useState('');
@@ -34,9 +34,9 @@ const LoginForm = ({setLogin}) => {
       return;
     }
 
-    const ip = getUserIp();
+    const ip = await getUserIp();
   
-    const res = await API.post('/user/signin', { username, password, ip });
+    const res = await API.post('/user/signin', { ip, username, password });
     // console.log(res.data);
 
     if (res.data.authToken) {

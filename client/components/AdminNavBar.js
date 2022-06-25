@@ -4,7 +4,8 @@ import { useCookies } from 'react-cookie';
 
 import {
   Stack,
-  Button 
+  Button, 
+  Typography
 } from '@mui/material';
 
 import styles from '../styles/Admin.module.css'
