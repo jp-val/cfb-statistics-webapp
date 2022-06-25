@@ -30,7 +30,7 @@ export const signin = async (req, res) => {
 
 	try {
 
-		const { username, password } = req.body;
+		const { ip, username, password } = req.body;
 		
 		const user = await UserModal.findOne({ username });
 		if (!user) return res.status(200).json({ message: "Username does not exist." });
@@ -44,9 +44,9 @@ export const signin = async (req, res) => {
 		const session = await SessionModal.findOne({ _id: user._id });
 
 		if (session) {
-			await SessionModal.findByIdAndUpdate(user._id, { authToken, loginTime: Date.now() });
+			await SessionModal.findByIdAndUpdate(user._id, { ip, authToken, loginTime: Date.now() });
 		} else {
-			await SessionModal.create({ _id: user._id, authToken });
+			await SessionModal.create({ _id: user._id, ip, authToken });
 		}
 
 		return res.status(200).json({ authToken });

@@ -14,6 +14,10 @@ const articleSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	uploadDate: {
+		type: Date,
+		default: Date.now(),
+	},
 	lastUpdate: {
 		type: Date,
 		default: Date.now(),

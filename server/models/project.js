@@ -6,17 +6,21 @@ const projectSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	link: {
+		type: String,
+		default: "",
+	},
 	description: {
 		type: String,
-		required: true,
+		default: "",
 	},
 	content: {
 		type: String,
 		default: "",
 	},
-	repoLink: {
-		type: String,
-		default: "",
+	uploadDate: {
+		type: Date,
+		default: Date.now(),
 	},
 	lastUpdate: {
 		type: Date,

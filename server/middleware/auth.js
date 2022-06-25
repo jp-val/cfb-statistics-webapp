@@ -4,10 +4,15 @@ export const authenticate = async (req, res, next) => {
 
 	try {
 
-		const { authToken } = req.body;
+		const { ip, authToken } = req.body;
 
 		const session = await SessionModal.findOne({ authToken });
 		if (!session) return res.status(200).json({ message: 'Invalid authentication token.' });
+
+		// if (ip != session.ip) {
+		// 	SessionModal.findByIdAndDelete(session._id);
+		// 	return res.status(200).json({ message: 'IP address does not match active session.' });
+		// }
 
 		var timeElapsed = Date.now() - session.loginTime;
 		var seconds = timeElapsed / 1000;

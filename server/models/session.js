@@ -10,6 +10,10 @@ const sessionSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	ip: {
+		type: String,
+		required: true,
+	},
 	loginTime: {
 		type: Date,
 		default: Date.now(),
