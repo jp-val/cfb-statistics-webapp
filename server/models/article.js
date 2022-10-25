@@ -6,13 +6,21 @@ const articleSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	tags: {
+		type: [String],
+		default: [],
+	},
 	description: {
 		type: String,
-		required: true,
+		default: "",
 	},
 	content: {
 		type: String,
-		required: true,
+		default: "",
+	},
+	isPublic: {
+		type: Boolean,
+		default: false,
 	},
 	uploadDate: {
 		type: Date,

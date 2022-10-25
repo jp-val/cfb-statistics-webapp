@@ -10,6 +10,10 @@ const projectSchema = mongoose.Schema({
 		type: String,
 		default: "",
 	},
+	tags: {
+		type: [String],
+		default: [],
+	},
 	description: {
 		type: String,
 		default: "",
@@ -17,6 +21,10 @@ const projectSchema = mongoose.Schema({
 	content: {
 		type: String,
 		default: "",
+	},
+	isPublic: {
+		type: Boolean,
+		default: false,
 	},
 	uploadDate: {
 		type: Date,

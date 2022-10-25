@@ -6,11 +6,11 @@ const sessionSchema = mongoose.Schema({
 		type: mongoose.Schema.ObjectId,
 		required: true,
 	},
-	authToken: {
+	ip: {
 		type: String,
 		required: true,
 	},
-	ip: {
+	authToken: {
 		type: String,
 		required: true,
 	},
