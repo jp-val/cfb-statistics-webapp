@@ -2,41 +2,47 @@ import express from 'express';
 
 const router = express.Router();
 
-import { authenticate, doNothing } from '../middleware/auth.js';
+import { authenticate, finish } from '../middleware/auth.js';
 import { signup, signin, signout } from '../controllers/users.js';
 
 import {
-	getProject,
-	getProjects,
 	uploadProject,
 	updateProject,
-	deleteProject
+	deleteProject,
+	getProject,
+	getUserProjects,
+	getPublicProjects,
 } from '../controllers/projects.js';
 
-// import {
-// 	getArticle,
-// 	getArticles,
-// 	uploadArticle,
-// 	updateArticle,
-// 	deleteArticle
-// } from '../controllers/articles.js';
+import {
+	uploadArticle,
+	updateArticle,
+	deleteArticle,
+	getArticle,
+	getUserArticles,
+	getPublicArticles,
+} from '../controllers/articles.js';
 
-router.post('/validate-token', authenticate, doNothing);
+router.get('/validate-access', authenticate, finish);
 
 router.post('/signup', signup);
 router.post('/signin', signin);
-router.post('/signout', signout);
+router.delete('/signout', signout);
 
-router.get('/get-projects', getProjects);
-router.post('/get-project', authenticate, getProject);
 router.post('/upload-project', authenticate, uploadProject);
-router.post('/update-project', authenticate, updateProject);
-router.post('/delete-project', authenticate, deleteProject);
+router.put('/update-project', authenticate, updateProject);
+router.patch('/delete-project', authenticate, deleteProject);
 
-// router.get('/get-articles', getArticles);
-// router.post('/get-article', authenticate, getArticle);
-// router.post('/upload-article', authenticate, uploadArticle);
-// router.post('/update-article', authenticate, updateArticle);
-// router.post('/delete-article', authenticate, deleteArticle);
+router.get('/get-project', authenticate, getProject);
+router.get('/get-projects', authenticate, getUserProjects);
+router.get('/get-public-projects', getPublicProjects);
 
-export default router;
+router.post('/upload-article', authenticate, uploadArticle);
+router.put('/update-article', authenticate, updateArticle);
+router.patch('/delete-article', authenticate, deleteArticle);
+
+router.get('/get-article', authenticate, getArticle);
+router.get('/get-articles', authenticate, getUserArticles);
+router.get('/get-public-articles', getPublicArticles);
+
+export default router
