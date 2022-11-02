@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 
 import userRoutes from './routes/users.js';
 
@@ -11,7 +12,8 @@ const app = express();
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({ credentials: true, origin: true }));
 
 app.get('/', (req, res) => {
 	res.send('69,420 lol');
